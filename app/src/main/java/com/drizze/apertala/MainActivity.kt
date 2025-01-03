@@ -1,5 +1,6 @@
 package com.drizze.apertala
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,14 +25,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.drizze.apertala.ui.theme.ApertaLaTheme
 import com.drizze.apertala.ui.theme.belanosimaFontFamily
 
@@ -85,10 +84,11 @@ fun LoginScreen(modifier: Modifier = Modifier) {
 fun LoginForm() {
     var login by remember { mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
+    val context = LocalContext.current
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(all = 40.dp)
+        modifier = Modifier.padding(all = 40.dp),
     ) {
         Text(
             text = "Entre com a sua conta",
@@ -123,12 +123,12 @@ fun LoginForm() {
             modifier = Modifier.padding(top = 20.dp),
             shape = RoundedCornerShape(4.dp),
             onClick = {
-
+                val videoListIntent = Intent(context, VideoList::class.java)
+                context.startActivity(videoListIntent)
             }
         ) {
             Text("Entrar")
         }
-
     }
 }
 

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Aperta La</string>
+    <string name="title_activity_video_list">VideoList</string>
 </resources>
