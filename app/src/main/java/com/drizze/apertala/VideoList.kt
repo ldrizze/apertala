@@ -38,8 +38,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.FileProvider
-import com.google.mlkit.vision.barcode.common.Barcode
-import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import java.io.File
 
@@ -80,7 +78,7 @@ class VideoList : ComponentActivity() {
         if (video.createNewFile()) {
             ins.use { input ->
                 video.outputStream().use { output ->
-                    ins.copyTo(output)
+                    input.copyTo(output)
                 }
             }
         }
@@ -185,7 +183,7 @@ fun ScaF(modifier: Modifier = Modifier) {
                                 Toast.LENGTH_SHORT
                             ).show()
 
-                            Log.e("QR", e.message.toString());
+                            Log.e("QR", e.message.toString())
                         }
                 }
             ) {
