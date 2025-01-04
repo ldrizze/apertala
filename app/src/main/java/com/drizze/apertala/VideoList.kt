@@ -1,10 +1,10 @@
 package com.drizze.apertala
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -38,8 +38,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.FileProvider
+import com.google.mlkit.vision.barcode.common.Barcode
+import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
+import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import java.io.File
-import java.io.FileOutputStream
 
 class VideoList : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -145,7 +147,7 @@ fun VideoThumb(picName: String, thumb: Painter, videoRef: String, modifier: Modi
     })) {
         Image(
             thumb,
-            "Pic video 1",
+            picName,
             modifier = Modifier.size(140.dp).clip(RoundedCornerShape(16.dp)),
             contentScale = ContentScale.Crop
         )
@@ -156,6 +158,7 @@ fun VideoThumb(picName: String, thumb: Painter, videoRef: String, modifier: Modi
 @Preview(showBackground = true)
 @Composable
 fun ScaF(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
     Scaffold(
         modifier,
         floatingActionButton = {
@@ -163,7 +166,28 @@ fun ScaF(modifier: Modifier = Modifier) {
                 containerColor = BackgroundMain,
                 contentColor = OrangeMain,
                 shape = CircleShape,
-                onClick = {  }
+                onClick = {
+                    val scanner = GmsBarcodeScanning.getClient(context)
+                    scanner.startScan()
+                        .addOnSuccessListener { barcode ->
+                            Toast.makeText(
+                                context,
+                                "Quadra reconhecida. Pra começar a gravar aperta lá!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            Log.d("QR", barcode.rawValue.toString())
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(
+                                context,
+                                "Quadra não reconhecida.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            Log.e("QR", e.message.toString());
+                        }
+                }
             ) {
                 Icon(
                     painterResource(R.drawable.baseline_qr_code_scanner_24_primary),

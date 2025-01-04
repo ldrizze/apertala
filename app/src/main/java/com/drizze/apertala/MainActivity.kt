@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -67,7 +68,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
         Image(
             painter = painterResource(R.drawable.login_wave),
             contentDescription = "",
-            modifier = Modifier.background(Color(0xffffffff))
+            modifier = Modifier.background(Color(0xffffffff)).fillMaxWidth()
         )
 
         Column(
